@@ -4,20 +4,20 @@
 
 The goal is to integrate **AI-powered analytics** (using Hugging Face free models) to help recruiters evaluate candidates more efficiently and provide job seekers with clearer insights into how they present themselves.  
 
-👉 Current state:  
-- ✅ Frontend built with **Next.js + Tailwind CSS**  
+## Current state:  
+- ✅ Frontend built with **React + Typescript + Tailwind CSS**  
 - ✅ Backend powered by **Node.js**  
 - ✅ Deployed on **Vercel**  
 - 🔄 Upcoming: **AI integration with Hugging Face models** for candidate/job insights  
 
 ---
 
-## 🌟 Why HireLens?
+## Why HireLens?
 The recruitment process is often overwhelming for both sides. HireLens aims to use **AI as a supportive tool** – not to replace human judgment, but to **save time, reduce bias, and give better feedback**.  
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 - **Frontend:** React, Tailwind CSS, Typescript
 - **Backend:** Node.js  
 - **AI (Planned):** Hugging Face free models  
@@ -25,8 +25,8 @@ The recruitment process is often overwhelming for both sides. HireLens aims to u
 
 ---
 
-## 🤝 Contributing
-Contributions are welcome! 🎉  
+## Contributing
+Contributions are welcome! 
 
 Here’s how you can help:  
 1. **Fork** the repo  
