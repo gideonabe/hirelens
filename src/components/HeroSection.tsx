@@ -11,15 +11,15 @@ export const HeroSection: React.FC = () => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroBackground})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/80 to-primary/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/40 via-primary/50 to-primary/50"></div>
       </div>
       
       {/* Content */}
       <div className="relative z-10 text-center text-white px-6 max-w-4xl mx-auto">
-        <div className="flex items-center justify-center space-x-2 mb-6">
+        <div className="flex items-center justify-center space-x-2 mb-6 mt-10">
           <Brain className="h-12 w-12 text-white" />
           <h1 className="text-4xl md:text-6xl font-bold">
-            CV Compare Genius
+            HireLens
           </h1>
         </div>
         
@@ -36,7 +36,7 @@ export const HeroSection: React.FC = () => {
           <Button 
             variant="outline" 
             size="lg" 
-            className="text-lg px-8 py-3 border-white/30 text-white hover:bg-white/10"
+            className="text-lg px-8 py-3 border-white/30 text-black hover:bg-white/10"
           >
             <Zap className="mr-2 h-5 w-5" />
             Learn More

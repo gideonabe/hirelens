@@ -192,7 +192,8 @@ const Index = () => {
             CV Compare Genius - Powered by AI for better job applications
           </p>
           <p className="text-sm text-muted-foreground mt-2">
-            <strong>Note:</strong> This demo uses mock analysis. For production, integrate with Supabase Edge Functions and AI APIs.
+            {/* <strong>Note:</strong> This demo uses mock analysis. For production, integrate with Supabase Edge Functions and AI APIs. */}
+            <p>All rights reserved &copy; DEON {new Date().getFullYear()}</p>
           </p>
         </div>
       </footer>
