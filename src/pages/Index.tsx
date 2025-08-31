@@ -65,7 +65,23 @@ const Index = () => {
 
     setIsAnalyzing(true);
     try {
-      const result = await mockAnalyzeResume(selectedFile, jobDescription);
+      // const result = await mockAnalyzeResume(selectedFile, jobDescription);
+
+      const formData = new FormData();
+      formData.append('resume', selectedFile);
+      formData.append('job_description', jobDescription);
+
+      const res = await fetch('https://resumescan-ai-resume-analyzer.onrender.com/analyze', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if(!res.ok){
+        throw new Error('Failed to analyze resume');
+      }
+
+      const result = await res.json();
+
       setAnalysisResult(result);
       toast({
         title: "Analysis Complete!",
@@ -202,3 +218,4 @@ const Index = () => {
 };
 
 export default Index;
+
