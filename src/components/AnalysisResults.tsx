@@ -201,6 +201,242 @@
 // };
 
 // components/AnalysisResults.tsx
+// import React, { useState } from 'react';
+// import { Card } from '@/components/ui/card';
+// import { Badge } from '@/components/ui/badge';
+// import {
+//   CheckCircle,
+//   XCircle,
+//   Lightbulb,
+//   TrendingUp,
+//   ClipboardCopy,
+//   ChevronDown,
+//   ChevronRight
+// } from 'lucide-react';
+// import { cn } from '@/lib/utils';
+// import { useToast } from '@/hooks/use-toast';
+
+// interface AnalysisResult {
+//   score: number;
+//   strengths: string[];
+//   weaknesses: string[];
+//   recommendations: string[];
+// }
+
+// interface AnalysisResultsProps {
+//   result: { result: string } | null;
+//   isLoading?: boolean;
+//   className?: string;
+// }
+
+// const parseAnalysisResult = (text: string): AnalysisResult => {
+//   const scoreMatch = text.match(/Match Percentage:\s*(\d+)%/i);
+//   const score = scoreMatch ? parseInt(scoreMatch[1], 10) : 0;
+
+//   const getSection = (header: string) => {
+//     const regex = new RegExp(`\\*\\*${header}:\\*\\*\\s*([\\s\\S]*?)(?=\\n\\*\\*|$)`, 'i');
+//     const match = text.match(regex);
+//     return match ? match[1].trim() : '';
+//   };
+
+//   const parseList = (sectionText: string) => {
+//     if (!sectionText) return [];
+//     const lines = sectionText.split('\n');
+//     return lines
+//       .map(line => {
+//         let item = line.replace(/^\d+\.\s*/, '').trim();
+//         item = item.replace(/\*\*(.*?)\*\*/g, '$1');
+//         item = item.replace(/:\s*$/, '');
+//         return item;
+//       })
+//       .filter(line => line.length > 0);
+//   };
+
+//   const strengths = parseList(getSection('Strengths'));
+//   const weaknesses = parseList(getSection('Areas for Improvement'));
+//   const recommendations = parseList(getSection('Recommendations'));
+
+//   return {
+//     score,
+//     strengths,
+//     weaknesses,
+//     recommendations,
+//   };
+// };
+
+// const CollapsibleSection: React.FC<{
+//   title: string;
+//   icon: React.ReactNode;
+//   iconSmall: React.ReactNode;
+//   colorClasses: string;
+//   items: string[];
+// }> = ({ title, icon, iconSmall, colorClasses, items }) => {
+//   const [isOpen, setIsOpen] = useState(true);
+//   const { toast } = useToast();
+
+//   const handleCopy = () => {
+//     const text = items.join('\n');
+//     navigator.clipboard.writeText(text).then(() => {
+//       toast({ title: `${title} copied to clipboard.` });
+//     });
+//   };
+
+//   return (
+//     <div className="space-y-3">
+//       {/* Header */}
+//       <div className="flex items-center justify-between">
+//         <button
+//           onClick={() => setIsOpen(prev => !prev)}
+//           className="flex items-center space-x-2 focus:outline-none group"
+//         >
+//           {isOpen ? (
+//             <ChevronDown className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition" />
+//           ) : (
+//             <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition" />
+//           )}
+//           {icon}
+//           <h3 className="text-lg font-semibold">{title}</h3>
+//         </button>
+//         {items.length > 0 && (
+//           <button
+//             onClick={handleCopy}
+//             className="flex items-center space-x-1 text-sm px-2 py-1 bg-muted rounded hover:bg-muted/80"
+//           >
+//             <ClipboardCopy className="h-4 w-4" />
+//             <span>Copy</span>
+//           </button>
+//         )}
+//       </div>
+
+//       {/* Content */}
+//       <div
+//         className={`transition-all duration-300 ease-in-out overflow-hidden`}
+//         style={{
+//           maxHeight: isOpen ? `${items.length * 80 + 40}px` : '0px',
+//           opacity: isOpen ? 1 : 0,
+//         }}
+//       >
+//         <div className="space-y-2 mt-2">
+//           {items.length > 0 ? (
+//             items.map((item, index) => (
+//               <div
+//                 key={index}
+//                 className={cn(
+//                   'flex items-start space-x-2 p-3 rounded-lg border',
+//                   colorClasses
+//                 )}
+//               >
+//                 <div className="mt-0.5 flex-shrink-0">{iconSmall}</div>
+//                 <span className="text-sm">{item}</span>
+//               </div>
+//             ))
+//           ) : (
+//             <p className="text-muted-foreground">No {title.toLowerCase()} identified.</p>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
+//   result,
+//   isLoading = false,
+//   className,
+// }) => {
+//   const getScoreColor = (score: number) => {
+//     if (score >= 80) return 'text-success';
+//     if (score >= 60) return 'text-warning';
+//     return 'text-destructive';
+//   };
+
+//   if (isLoading) {
+//     return (
+//       <Card className={cn('p-6 animate-pulse', className)}>
+//         <div className="space-y-6">
+//           <div className="h-8 bg-muted rounded w-1/3"></div>
+//           <div className="h-4 bg-muted rounded w-full"></div>
+//           <div className="h-32 bg-muted rounded"></div>
+//         </div>
+//       </Card>
+//     );
+//   }
+
+//   if (!result || !result.result) {
+//     return <p className="text-center py-10">No analysis results to display.</p>;
+//   }
+
+//   const parsed = parseAnalysisResult(result.result);
+
+//   return (
+//     <Card className={cn('p-6 transition-all duration-300 hover:shadow-lg', className)}>
+//       <div className="space-y-6">
+//         {/* Score Section */}
+//         <div className="text-center">
+//           <div className="flex items-center justify-center space-x-2 mb-4">
+//             <TrendingUp className="h-6 w-6 text-primary" />
+//             <h2 className="text-2xl font-bold">Analysis Results</h2>
+//           </div>
+
+//           <div className="relative w-32 h-32 mx-auto mb-4">
+//             <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 36 36">
+//               <path
+//                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+//                 fill="none"
+//                 stroke="hsl(var(--muted))"
+//                 strokeWidth="3"
+//               />
+//               <path
+//                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+//                 fill="none"
+//                 stroke="currentColor"
+//                 strokeWidth="3"
+//                 strokeDasharray={`${parsed.score}, 100`}
+//                 className={getScoreColor(parsed.score)}
+//               />
+//             </svg>
+//             <div className="absolute inset-0 flex items-center justify-center">
+//               <span className={cn('text-3xl font-bold', getScoreColor(parsed.score))}>
+//                 {parsed.score}%
+//               </span>
+//             </div>
+//           </div>
+
+//           <Badge variant="secondary" className="text-lg px-4 py-2">
+//             Match Score
+//           </Badge>
+//         </div>
+
+//         {/* Collapsible Sections */}
+//         <CollapsibleSection
+//           title="Strengths"
+//           icon={<CheckCircle className="h-5 w-5 text-success" />}
+//           iconSmall={<CheckCircle className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />}
+//           colorClasses="bg-success/10 border-success/20"
+//           items={parsed.strengths}
+//         />
+
+//         <CollapsibleSection
+//           title="Areas for Improvement"
+//           icon={<XCircle className="h-5 w-5 text-amber-600" />}
+//           iconSmall={<XCircle className="h-4 w-4 text-amber-600 mt-0.5 flex-shrink-0" />}
+//           colorClasses="bg-orange-100 border-amber-200"
+//           items={parsed.weaknesses}
+//         />
+
+//         <CollapsibleSection
+//           title="Recommendations"
+//           icon={<Lightbulb className="h-5 w-5 text-warning" />}
+//           iconSmall={<Lightbulb className="h-4 w-4 text-warning mt-0.5 flex-shrink-0" />}
+//           colorClasses="bg-warning/10 border-warning/20"
+//           items={parsed.recommendations}
+//         />
+//       </div>
+//     </Card>
+//   );
+// };
+
+
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -310,13 +546,16 @@ const CollapsibleSection: React.FC<{
 
       {/* Content */}
       <div
-        className={`transition-all duration-300 ease-in-out overflow-hidden`}
+        className={cn(
+          'transition-all duration-300 ease-in-out',
+          isOpen ? 'max-h-96 overflow-y-auto mt-2' : 'max-h-0 overflow-hidden opacity-0',
+          'opacity-100'
+        )}
         style={{
-          maxHeight: isOpen ? `${items.length * 80 + 40}px` : '0px',
           opacity: isOpen ? 1 : 0,
         }}
       >
-        <div className="space-y-2 mt-2">
+        <div className="space-y-2">
           {items.length > 0 ? (
             items.map((item, index) => (
               <div
