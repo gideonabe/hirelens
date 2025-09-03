@@ -187,7 +187,7 @@ const Index = () => {
       <footer className="bg-muted/30 py-8 mt-16">
         <div className="container mx-auto px-6 text-center">
           <p className="text-muted-foreground">
-            CV Compare Genius - Powered by AI for better job applications
+            HireLens - Powered by AI for better job applications
           </p>
           <p className="text-sm text-muted-foreground mt-2">
             <p>All rights reserved &copy; DEON {new Date().getFullYear()}</p>
